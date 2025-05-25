@@ -1,38 +1,772 @@
-.App {
-  text-align: center;
+/* Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* Container styles */
+.app-container {
   min-height: 100vh;
+  background: linear-gradient(135deg, #581c87, #1e3a8a, #312e81);
+  padding: 1.5rem;
+}
+
+.app-content {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.app-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Upload section */
+.upload-section {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.upload-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.upload-label {
+  display: block;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.upload-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  color: white;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 0.5rem;
+  transition: background-color 0.15s;
+  border: none;
+  cursor: pointer;
+}
+
+.audio-button {
+  background-color: #2563eb;
+}
+
+.audio-button:hover {
+  background-color: #1d4ed8;
+}
+
+.image-button {
+  background-color: #16a34a;
+}
+
+.image-button:hover {
+  background-color: #15803d;
+}
+
+.srt-button {
+  background-color: #d97706;
+}
+
+.srt-button:hover {
+  background-color: #b45309;
+}
+
+/* Timing mode */
+.timing-mode {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.mode-indicator {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.mode-indicator.active {
+  background-color: #2563eb;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Main grid */
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
-@keyframes App-logo-spin {
+/* Slideshow container */
+.slideshow-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(16px);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease-out;
+}
+
+.slideshow-display {
+  position: relative;
+  aspect-ratio: 16/9;
+  background-color: black;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.slide-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: slideLeft 0.3s ease-out;
+}
+
+@keyframes slideLeft {
   from {
-    transform: rotate(0deg);
+    transform: translateX(100%);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    transform: translateX(0);
+    opacity: 1;
   }
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-text-container {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+  padding: 2rem;
+  z-index: 10;
+  opacity: 1 !important;
+  pointer-events: none;
+  max-height: calc(100% - 140px);
+  overflow-y: auto;
+}
+
+.slide-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.5;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  white-space: pre-line;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.slide-counter,
+.time-counter {
+  position: absolute;
+  top: 1rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+.slide-counter {
+  left: 1rem;
+}
+
+.time-counter {
+  right: 1rem;
+}
+
+/* Empty slideshow */
+.empty-slideshow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.empty-content {
+  text-align: center;
+}
+
+.empty-icon {
+  margin: 0 auto 0.5rem;
+  opacity: 0.5;
+}
+
+/* Audio controls */
+.audio-controls {
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  position: relative;
+  z-index: 20;
+  margin-top: 0.5rem;
+}
+
+.hidden-audio {
+  display: none;
+}
+
+.audio-controls-grid {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.play-button {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.play-button:hover {
+  background-color: #1d4ed8;
+}
+
+.seek-container {
+  flex: 1;
+}
+
+.seek-slider,
+.volume-slider {
+  width: 100%;
+  height: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.seek-slider::-webkit-slider-thumb,
+.volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.volume-icon {
+  color: white;
+}
+
+.volume-slider {
+  width: 5rem;
+}
+
+.add-slide-button {
+  width: 100%;
+  background-color: #d97706;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.15s;
+}
+
+.add-slide-button:hover {
+  background-color: #b45309;
+}
+
+.add-slide-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Timing editor */
+.timing-editor {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.editor-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.editor-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.clear-button,
+.export-button {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.clear-button {
+  background-color: #dc2626;
+}
+
+.clear-button:hover {
+  background-color: #b91c1c;
+}
+
+.export-button {
+  background-color: #16a34a;
+}
+
+.export-button:hover {
+  background-color: #15803d;
+}
+
+.clear-button:disabled,
+.export-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Slides timeline */
+.slides-timeline {
+  max-height: 24rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.slide-item {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  border-left: 4px solid transparent;
+  transition: background-color 0.15s;
+}
+
+.slide-item.active {
+  border-left-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.2);
+}
+
+.slide-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.slide-text-input {
+  grid-column: span 4;
+}
+
+.slide-time-input {
+  grid-column: span 3;
+}
+
+.slide-actions {
+  grid-column: span 2;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.timing-input {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  outline: none;
+}
+
+.delete-button {
+  color: #f87171;
+  padding: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.delete-button:hover {
+  color: #fca5a5;
+}
+
+/* Empty timeline */
+.empty-timeline {
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.empty-subtext {
+  font-size: 0.875rem;
+}
+
+/* Instructions section */
+.instructions-section {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.instructions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.instructions-title {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.instructions-list {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+.instructions-list li {
+  margin-top: 0.25rem;
+}
+
+/* SRT example */
+.srt-example {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: rgba(59, 130, 246, 0.2);
+  border-radius: 0.5rem;
+}
+
+.example-title {
+  color: #bfdbfe;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.example-code {
+  color: #dbeafe;
+  font-size: 0.75rem;
+  white-space: pre;
+  font-family: monospace;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .upload-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .instructions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .slide-text-container {
+    bottom: 70px;
+    padding: 1.5rem;
+  }
+  
+  .slide-text {
+    font-size: 1.25rem;
+  }
+}
+
+/* Fullscreen styles */
+.app-container.fullscreen {
+  padding: 0;
+  background: linear-gradient(135deg, #581c87, #1e3a8a, #312e81);
+}
+
+.app-container.fullscreen .app-content {
+  max-width: none;
+  height: 100vh;
+}
+
+.fullscreen-grid {
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  height: 100vh;
+}
+
+.fullscreen-slideshow {
+  background: none !important;
+  padding: 0 !important;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.fullscreen-slideshow .slideshow-display {
+  flex: 1;
+  margin: 0;
+  border-radius: 0;
+}
+
+/* Fullscreen button */
+.fullscreen-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  z-index: 100;
+}
+
+.fullscreen-button:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Navigation buttons */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 100;
+}
+
+.nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.prev-button {
+  left: 1rem;
+}
+
+.next-button {
+  right: 1rem;
+}
+
+/* Fullscreen audio controls */
+.fullscreen-audio-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  border-radius: 0;
+  padding: 1.5rem;
+  margin: 0;
+  z-index: 20;
+}
+
+.fullscreen-audio-controls:hover {
+  transform: translateY(0);
+}
+
+/* Slide counter and time in fullscreen */
+.fullscreen-slideshow .slide-counter,
+.fullscreen-slideshow .time-counter {
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+/* Slide text in fullscreen */
+.fullscreen-slideshow .slide-text-container {
+  bottom: 100px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.8));
+  padding: 3rem;
+}
+
+.fullscreen-slideshow .slide-text {
+  font-size: 2rem;
+}
+
+/* Control visibility transitions */
+.slideshow-container .slide-counter,
+.slideshow-container .time-counter,
+.slideshow-container .fullscreen-button,
+.slideshow-container .nav-button,
+.slideshow-container .audio-controls {
+  transition: opacity 300ms ease-out;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.slideshow-container .hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Fullscreen slideshow cursor */
+.fullscreen-slideshow {
+  cursor: none;
+}
+
+.fullscreen-slideshow:hover {
+  cursor: auto;
+}
+
+/* Ensure subtitle text container is always visible */
+.slide-text-container {
+  transition: none !important;
+  opacity: 1 !important;
+  pointer-events: none;
+}
+
+/* Audio controls specific transitions */
+.audio-controls {
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.audio-controls.hide {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+/* Navigation buttons specific transitions */
+.nav-button {
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.nav-button.hide {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+/* Fullscreen button specific transitions */
+.fullscreen-button {
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.fullscreen-button.hide {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+/* Counter specific transitions */
+.slide-counter,
+.time-counter {
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.slide-counter.hide,
+.time-counter.hide {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+/* Fullscreen image adjustments */
+.fullscreen-image {
+  object-fit: contain !important;
+  background-color: black;
+}
+
+/* Auto-hide controls */
+.fullscreen-slideshow {
+  cursor: none;
+}
+
+.fullscreen-slideshow:hover {
+  cursor: auto;
 }
