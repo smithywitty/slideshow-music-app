@@ -424,7 +424,7 @@ body {
 }
 
 .slide-text-input {
-  grid-column: span 4;
+  grid-column: span 6;
 }
 
 .slide-time-input {
@@ -441,11 +441,32 @@ body {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  padding: 0.5rem;
   border-radius: 0.25rem;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   outline: none;
+  transition: all 0.2s ease;
+}
+
+.timing-input:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.timing-input:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.timing-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.timing-input:invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
 }
 
 .delete-button {
@@ -769,4 +790,328 @@ body {
 
 .fullscreen-slideshow:hover {
   cursor: auto;
+}
+
+/* Slide item hover effect */
+.slide-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.slide-item.active:hover {
+  background-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Auto-shift toggle */
+.auto-shift-toggle {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.toggle-label input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+/* Auto-shift enabled input */
+.timing-input.auto-shift-enabled {
+  background-color: rgba(234, 179, 8, 0.1);
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+.timing-input.auto-shift-enabled:hover {
+  background-color: rgba(234, 179, 8, 0.15);
+  border-color: rgba(234, 179, 8, 0.4);
+}
+
+.timing-input.auto-shift-enabled:focus {
+  background-color: rgba(234, 179, 8, 0.2);
+  border-color: #eab308;
+  box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.3);
+}
+
+/* Preview panel */
+.preview-panel {
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.preview-warning {
+  color: #3b82f6;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.apply-button,
+.cancel-button {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.apply-button {
+  background-color: #16a34a;
+  color: white;
+}
+
+.apply-button:hover {
+  background-color: #15803d;
+}
+
+.cancel-button {
+  background-color: #dc2626;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #b91c1c;
+}
+
+.preview-timeline {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  padding: 0.75rem;
+}
+
+.preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.preview-item:last-child {
+  border-bottom: none;
+}
+
+.preview-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+}
+
+.preview-time {
+  color: #3b82f6;
+  font-size: 0.75rem;
+  font-family: monospace;
+}
+
+.preview-more {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Editor header */
+.editor-title-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Auto-shift toggle */
+.auto-shift-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.toggle-text {
+  font-weight: 500;
+}
+
+.toggle-status {
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.toggle-status.enabled {
+  background-color: #16a34a;
+  color: white;
+}
+
+.toggle-status.disabled {
+  background-color: #dc2626;
+  color: white;
+}
+
+/* Time display */
+.time-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+}
+
+.edit-button {
+  color: #3b82f6;
+  padding: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.edit-button:hover {
+  color: #60a5fa;
+}
+
+/* Time editor */
+.time-editor {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.time-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.time-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.time-input-group label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+}
+
+.quick-adjust {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.quick-adjust button {
+  flex: 1;
+  padding: 0.25rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-adjust button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.quick-adjust button:active {
+  transform: translateY(1px);
+}
+
+/* Timeline bar */
+.timeline-bar {
+  position: relative;
+  height: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.timeline-progress {
+  position: absolute;
+  height: 100%;
+  background-color: #3b82f6;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+/* Slide item editing state */
+.slide-item.editing {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-left-color: #3b82f6;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+/* Check button styling */
+.check-button {
+  color: #16a34a;
+  padding: 0.5rem;
+  background-color: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.3);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-button:hover {
+  color: #15803d;
+  background-color: rgba(22, 163, 74, 0.2);
+  border-color: rgba(22, 163, 74, 0.4);
+  transform: scale(1.05);
+}
+
+.check-button:active {
+  transform: scale(0.95);
+}
+
+.check-button svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 3;
+}
+
+.text-input {
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+  line-height: 1.5;
+  padding: 0.75rem;
+}
+
+.text-input:focus {
+  min-height: 80px;
 }
