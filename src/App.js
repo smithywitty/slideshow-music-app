@@ -497,6 +497,19 @@ const AdvancedSlideshow = () => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  // Tambahkan setelah deklarasi semua state (setelah baris const [editingSlideId, setEditingSlideId] = useState(null);)
+  useEffect(() => {
+    if (images.length === 0) return;
+    setSlides(prevSlides =>
+      prevSlides.map((slide, idx) => ({
+        ...slide,
+        imageIndex: typeof slide.imageIndex === 'number'
+          ? Math.min(slide.imageIndex, images.length - 1)
+          : Math.min(idx, images.length - 1)
+      }))
+    );
+  }, [images]);
+
   return (
     <div className={`app-container ${isFullscreen ? 'fullscreen' : ''}`}>
       <div className="app-content">
@@ -596,11 +609,15 @@ const AdvancedSlideshow = () => {
             <div className="slideshow-display">
               {images.length > 0 && slides.length > 0 ? (
                 <div className="slide-content" key={currentSlide}>
-                  <img
-                    src={images[slides[currentSlide]?.imageIndex || 0]?.url}
-                    alt={`Slide ${currentSlide + 1}`}
-                    className={`slide-image ${isFullscreen ? 'fullscreen-image' : ''}`}
-                  />
+                  {images[slides[currentSlide]?.imageIndex]?.url ? (
+                    <img
+                      src={images[slides[currentSlide]?.imageIndex].url}
+                      alt={`Slide ${currentSlide + 1}`}
+                      className={`slide-image ${isFullscreen ? 'fullscreen-image' : ''}`}
+                    />
+                  ) : (
+                    <div className="slide-image-placeholder">Gambar tidak ditemukan</div>
+                  )}
                   <div className="slide-text-container">
                     <p className="slide-text">
                       {slides[currentSlide]?.text || ''}
