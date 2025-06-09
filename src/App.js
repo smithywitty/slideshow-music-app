@@ -72,14 +72,16 @@ const AdvancedSlideshow = () => {
         const srtText = e.target.result;
         const parsedSlides = parseSRT(srtText);
         
-        if (parsedSlides.length > 0) {
-          setSlides(parsedSlides);
-          setSrtFile(file.name);
-          setTimingMode('srt');
-          setCurrentSlide(0);
-        } else {
-          alert('Could not parse SRT file. Please check the format.');
-        }
+        // Pastikan setiap slide memiliki imageIndex yang valid
+        const slidesWithValidImages = parsedSlides.map((slide, idx) => ({
+          ...slide,
+          imageIndex: images.length > 0 ? Math.min(idx, images.length - 1) : 0
+        }));
+        
+        setSlides(slidesWithValidImages);
+        setSrtFile(file.name);
+        setTimingMode('srt');
+        setCurrentSlide(0);
       };
       reader.readAsText(file);
     } else {
@@ -129,7 +131,7 @@ const AdvancedSlideshow = () => {
             text: text,
             startTime: startTime,
             endTime: endTime,
-            imageIndex: Math.min(index, images.length - 1)
+            imageIndex: images.length > 0 ? Math.min(index, images.length - 1) : 0
           });
         }
       }
@@ -497,18 +499,18 @@ const AdvancedSlideshow = () => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  // Tambahkan setelah deklarasi semua state (setelah baris const [editingSlideId, setEditingSlideId] = useState(null);)
+  // Tambahkan useEffect baru setelah useEffect yang sudah ada
   useEffect(() => {
-    if (images.length === 0) return;
-    setSlides(prevSlides =>
-      prevSlides.map((slide, idx) => ({
-        ...slide,
-        imageIndex: typeof slide.imageIndex === 'number'
-          ? Math.min(slide.imageIndex, images.length - 1)
-          : Math.min(idx, images.length - 1)
-      }))
-    );
-  }, [images]);
+    // Update imageIndex setiap kali slides atau images berubah
+    if (slides.length > 0 && images.length > 0) {
+      setSlides(prevSlides => 
+        prevSlides.map((slide, idx) => ({
+          ...slide,
+          imageIndex: Math.min(idx, images.length - 1)
+        }))
+      );
+    }
+  }, [slides.length, images.length]);
 
   return (
     <div className={`app-container ${isFullscreen ? 'fullscreen' : ''}`}>
@@ -614,9 +616,15 @@ const AdvancedSlideshow = () => {
                       src={images[slides[currentSlide]?.imageIndex].url}
                       alt={`Slide ${currentSlide + 1}`}
                       className={`slide-image ${isFullscreen ? 'fullscreen-image' : ''}`}
+                      onError={(e) => {
+                        console.error('Error loading image:', e);
+                        e.target.style.display = 'none';
+                      }}
                     />
                   ) : (
-                    <div className="slide-image-placeholder">Gambar tidak ditemukan</div>
+                    <div className="slide-image-placeholder">
+                      {images.length === 0 ? 'Belum ada gambar diupload' : 'Gambar tidak ditemukan'}
+                    </div>
                   )}
                   <div className="slide-text-container">
                     <p className="slide-text">
